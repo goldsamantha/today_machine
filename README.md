@@ -2,6 +2,7 @@
 ```
 python3 -m venv env
 python3 -m pip install requests
+python3 -m pip install todoist-python 
 ```
 
 # TODOS:
