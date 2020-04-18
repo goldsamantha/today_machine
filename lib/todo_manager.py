@@ -1,6 +1,7 @@
 import requests
 import json
 from datetime import date
+from typing import Dict, Tuple, Sequence
 
 from . import secrets
 from . import sample
@@ -20,13 +21,13 @@ Here are today's tasks:
 
 class TodoManager:
 
-    def getToDoListString(self): 
+    def getToDoListString(self) -> str: 
         # Not totally sure which technique i need for this
         # so going to leave this here for posterity if i need this
         #useSyncLibrary()
         return self.getInfoFromRestAPI()
 
-    def getInfoFromRestAPI(self):
+    def getInfoFromRestAPI(self) -> str:
         today_and_overdue = self.getRequestData()
         (today_tasks, overdue_tasks) = self.getTodayAndOverdue(today_and_overdue)
         return self.getTasksString(today_tasks, overdue_tasks)
@@ -44,15 +45,14 @@ class TodoManager:
         ).json()
 
 
-    def getFilterString(self):
+    def getFilterString(self) -> str:
         today_date = date.today().isoformat()
         return "(due: %s | overdue)" % today_date
 
-    def getHeaderString(self):
+    def getHeaderString(self) -> str:
         return "Bearer %s" % secrets.API_TOKEN
 
-
-    def getTasksString(self, today, overdue):
+    def getTasksString(self, today, overdue) -> str:
 
         s = PREFIX_STRING
         for task in today:
@@ -66,7 +66,7 @@ class TodoManager:
         return s
 
 
-    def getTodayAndOverdue(self, all_tasks):
+    def getTodayAndOverdue(self, all_tasks) -> Tuple:
         today = []
         overdue = []
         today_date = date.today().isoformat()
