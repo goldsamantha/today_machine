@@ -2,6 +2,7 @@ import requests
 import json
 from lib import secrets
 from lib import sample
+from lib.todos import Todos
 from datetime import date
 
 # for Sync api
@@ -11,16 +12,21 @@ from todoist.api import TodoistAPI
 # leaving here for now in case i need this...
 
 def main():
-    useRestAPI()
+    todo_manager = Todos()
+    todo_string = todo_manager.getToDoListString()
+    print(todo_string)
 
+
+def getToDoListString():
     # Not totally sure which technique i need for this
     # so going to leave this here for posterity if i need this
     #useSyncLibrary()
+    return getInfoFromRestAPI()
 
-def useRestAPI():
+def getInfoFromRestAPI():
     today_and_overdue = getRequestData()
     (today_tasks, overdue_tasks) = getTodayAndOverdue(today_and_overdue)
-    printTasks(today_tasks, overdue_tasks)
+    return getTasksString(today_tasks, overdue_tasks)
 
 
 def getRequestData():
@@ -43,20 +49,24 @@ def getHeaderString():
     return "Bearer %s" % secrets.API_TOKEN
 
 
-def printTasks(today, overdue):
+def getTasksString(today, overdue):
 
-    print("☆ﾟ.*･｡ﾟ☆ﾟ.*･｡ﾟ☆ﾟ.*･｡ﾟ☆ﾟ.*･｡ﾟ☆ﾟ.*･｡ﾟ☆ﾟ.*･｡ﾟ")
-    print("       Good morning goldsam!")
-    print("☆ﾟ.*･｡ﾟ☆ﾟ.*･｡ﾟ☆ﾟ.*･｡ﾟ☆ﾟ.*･｡ﾟ☆ﾟ.*･｡ﾟ☆ﾟ.*･｡ﾟ")
-    print("\n")
-    print("Here are today's tasks:")
+    s = """
+☆ﾟ.*･｡ﾟ☆ﾟ.*･｡ﾟ☆ﾟ.*･｡ﾟ☆ﾟ.*･｡ﾟ☆ﾟ.*･｡ﾟ☆ﾟ.*･｡ﾟ
+       Good morning goldsam!
+☆ﾟ.*･｡ﾟ☆ﾟ.*･｡ﾟ☆ﾟ.*･｡ﾟ☆ﾟ.*･｡ﾟ☆ﾟ.*･｡ﾟ☆ﾟ.*･｡ﾟ
+
+Here are today's tasks:
+"""
     for task in today:
-        print("□ %s" % task['content'])
-    print("\nHere are your overdue tasks:")
+        s += "□ %s\n" % task['content']
+    s += "\nHere are your overdue tasks:\n"
     for task in overdue:
-        print("□ %s" % task['content'])
+        s += "□ %s\n" % task['content']
     
-    print("\n\n\n")
+    s += "\n\n\n"
+
+    return s
 
 
 def getTodayAndOverdue(all_tasks):
