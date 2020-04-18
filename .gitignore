@@ -2,3 +2,4 @@
 */secrets.py
 *__pycache__
 env/
+lib/sample.py
