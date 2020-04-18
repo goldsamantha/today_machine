@@ -7,5 +7,5 @@ python3 -m pip install todoist-python
 
 # TODOS:
 - [ ] add requirements.txt
-- [ ] add secrets.py and ignore it
+- [x] add secrets.py and ignore it
 - [ ] set up any kind of modules/lib environment

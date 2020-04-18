@@ -11,25 +11,37 @@ from todoist.api import TodoistAPI
 # leaving here for now in case i need this...
 
 def main():
-    # Not totally sure which technique i need for this so trying here with both in case
     useRestAPI()
 
+    # Not totally sure which technique i need for this
+    # so going to leave this here for posterity if i need this
     #useSyncLibrary()
 
 def useRestAPI():
-    today_date = date.today().isoformat()
-    today_and_overdue = requests.get(
+    today_and_overdue = getRequestData()
+    (today_tasks, overdue_tasks) = getTodayAndOverdue(today_and_overdue)
+    printTasks(today_tasks, overdue_tasks)
+
+
+def getRequestData():
+    return requests.get(
         "https://api.todoist.com/rest/v1/tasks",
         params={
-            "filter": "(due: %s | overdue)" % today_date
+            "filter":  getFilterString()
         },
         headers={
-            "Authorization": "Bearer %s" % secrets.API_TOKEN
-        }).json()
+            "Authorization": getHeaderString()
+        }
+    ).json()
 
-    (today_tasks, overdue_tasks) = getTodayAndOverdue(today_and_overdue)
 
-    printTasks(today_tasks, overdue_tasks)
+def getFilterString():
+    today_date = date.today().isoformat()
+    return "(due: %s | overdue)" % today_date
+
+def getHeaderString():
+    return "Bearer %s" % secrets.API_TOKEN
+
 
 def printTasks(today, overdue):
 
@@ -39,10 +51,12 @@ def printTasks(today, overdue):
     print("\n")
     print("Here are today's tasks:")
     for task in today:
-        print("[ ] %s" % task['content'])
+        print("□ %s" % task['content'])
     print("\nHere are your overdue tasks:")
     for task in overdue:
-        print("[ ] %s" % task['content'])
+        print("□ %s" % task['content'])
+    
+    print("\n\n\n")
 
 
 def getTodayAndOverdue(all_tasks):
@@ -58,12 +72,6 @@ def getTodayAndOverdue(all_tasks):
             overdue.append(task)
 
     return (today, overdue)
-
-def getTodaysTasks(all_tasks):
-    return []
-
-def getOverdueTasks(all_tasks):
-    return []
 
 def useSyncLibrary():
     api = TodoistAPI(secrets.API_TOKEN)
