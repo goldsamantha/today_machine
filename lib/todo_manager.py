@@ -4,7 +4,6 @@ from datetime import date
 from typing import Dict, Tuple, Sequence
 
 from . import secrets
-from . import sample
 
 # for Sync api
 # alternative approach
