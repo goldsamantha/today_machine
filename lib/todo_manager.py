@@ -5,6 +5,11 @@ from datetime import date
 from . import secrets
 from . import sample
 
+# for Sync api
+# alternative approach
+# leaving here for now in case i need this...
+from todoist.api import TodoistAPI
+
 PREFIX_STRING = """
 ☆ﾟ.*･｡ﾟ☆ﾟ.*･｡ﾟ☆ﾟ.*･｡ﾟ☆ﾟ.*･｡ﾟ☆ﾟ.*･｡ﾟ☆ﾟ.*･｡ﾟ
     Good morning goldsam!
