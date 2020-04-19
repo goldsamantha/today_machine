@@ -11,9 +11,9 @@ from . import secrets
 from todoist.api import TodoistAPI
 
 PREFIX_STRING = """
-☆ﾟ.*･｡ﾟ☆ﾟ.*･｡ﾟ☆ﾟ.*･｡ﾟ☆ﾟ.*･｡ﾟ☆ﾟ.*･｡ﾟ☆ﾟ.*･｡ﾟ
-    Good morning goldsam!
-☆ﾟ.*･｡ﾟ☆ﾟ.*･｡ﾟ☆ﾟ.*･｡ﾟ☆ﾟ.*･｡ﾟ☆ﾟ.*･｡ﾟ☆ﾟ.*･｡ﾟ
+*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~
+      Good morning goldsam!
+*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~
 
 Here are today's tasks:
 """
@@ -55,12 +55,12 @@ class TodoManager:
 
         s = PREFIX_STRING
         for task in today:
-            s += "□ %s\n" % task['content']
+            s += "[ ] %s\n" % task['content']
         s += "\nHere are your overdue tasks:\n"
         for task in overdue:
-            s += "□ %s\n" % task['content']
+            s += "[ ] %s\n" % task['content']
         
-        s += "\n□\n□\n□\n\n\n\n\n"
+        s += "[ ]\n[ ]\n[ ]\n\n\n\n\n"
 
         return s
 
