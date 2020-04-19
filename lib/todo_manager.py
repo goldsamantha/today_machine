@@ -60,7 +60,7 @@ class TodoManager:
         for task in overdue:
             s += "□ %s\n" % task['content']
         
-        s += "\n\n\n"
+        s += "\n□\n□\n□\n\n\n\n\n"
 
         return s
 

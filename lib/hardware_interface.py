@@ -23,7 +23,7 @@ class HardwareInterface:
         return GPIO.input(PIN_NUM) == GPIO.HIGH
     
     def writeToPrinter(self, st: str):
-        self.ser.write(b'button pushed!\n\n')
+        self.ser.write(st.encode())
 
 if __name__ == '__main__':
     print("hardware_interface.py")

@@ -1,5 +1,6 @@
 *.swp
 */secrets.py
 *__pycache__
+*.pyc
 env/
 lib/sample.py
