@@ -18,7 +18,7 @@ however be extra careful to never share your token in git!
 * Note the power supply is a [5v 2A power supply](https://www.adafruit.com/product/276)
 
 # TODOS:
-- [ ] add requirements.txt
+- [x] add requirements.txt
 - [x] add secrets.py and ignore it
-- [ ] set up any kind of modules/lib environment
-- [ ] separate lib file to get the string from
+- [x] set up any kind of modules/lib environment
+- [x] separate lib file to get the string from
