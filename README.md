@@ -14,6 +14,9 @@ Then go ahead and add your own token to the file lib/secrets.py
 N.B. This file is automatically .gitignored so it shouldn't get added,
 however be extra careful to never share your token in git!
 
+![Fritzing diagram](./assets/fritzing.png)
+* Note the power supply is a [5v 2A power supply](https://www.adafruit.com/product/276)
+
 # TODOS:
 - [ ] add requirements.txt
 - [x] add secrets.py and ignore it
