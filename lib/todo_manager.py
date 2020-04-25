@@ -1,9 +1,10 @@
 import requests
 import json
 from datetime import date
-from typing import Dict, Tuple, Sequence
+from typing import Dict, Tuple, Sequence, List
 
 from . import secrets
+from .todo_item import TodoItem
 
 # for Sync api
 # alternative approach
@@ -28,7 +29,9 @@ class TodoManager:
 
     def getInfoFromRestAPI(self) -> str:
         today_and_overdue = self.getRequestData()
-        (today_tasks, overdue_tasks) = self.getTodayAndOverdue(today_and_overdue)
+
+        task_objects = self.getTaskObjects(today_and_overdue)
+        (today_tasks, overdue_tasks) = self.getTodayAndOverdue(task_objects) #today_and_overdue)
         return self.getTasksString(today_tasks, overdue_tasks)
 
 
@@ -43,6 +46,9 @@ class TodoManager:
             }
         ).json()
 
+    def getTaskObjects(self, task_data) -> List[TodoItem]:
+        return [TodoItem(item) for item in task_data]
+
 
     def getFilterString(self) -> str:
         today_date = date.today().isoformat()
@@ -51,28 +57,30 @@ class TodoManager:
     def getHeaderString(self) -> str:
         return "Bearer %s" % secrets.API_TOKEN
 
-    def getTasksString(self, today, overdue) -> str:
+    def getTasksString(self, today: List[TodoItem], overdue: List[TodoItem]) -> str:
 
         s = PREFIX_STRING
         for task in today:
-            s += "[ ] %s\n" % task['content']
+            s += "[ ] %s\n" % task.getContent()
         s += "\nHere are your overdue tasks:\n"
         for task in overdue:
-            s += "[ ] %s\n" % task['content']
+            s += "[ ] %s\n" % task.getContent()
         
         s += "[ ]\n[ ]\n[ ]\n\n\n\n\n"
 
         return s
 
+    """
+    - Filter out all of the tasks that are for today
+    - Filter out all of the tasks WITH timestamps 
+    """
 
-    def getTodayAndOverdue(self, all_tasks) -> Tuple:
+    def getTodayAndOverdue(self, all_tasks: List[TodoItem]) -> Tuple:
         today = []
         overdue = []
-        today_date = date.today().isoformat()
 
         for task in all_tasks:
-            due_date = task['due']['date']
-            if (due_date == today_date):
+            if (task.isToday()):
                 today.append(task)
             else:
                 overdue.append(task)
