@@ -30,8 +30,9 @@ class TodoManager:
     def getInfoFromRestAPI(self) -> str:
         today_and_overdue = self.getRequestData()
 
-        task_objects = self.getTaskObjects(today_and_overdue)
-        (today_tasks, overdue_tasks) = self.getTodayAndOverdue(task_objects) #today_and_overdue)
+        # TODO: should probably do this setting in the constructor instead
+        self.task_objects = self.formatTaskObjects(today_and_overdue)
+        (today_tasks, overdue_tasks) = self.getTodayAndOverdue(self.task_objects) #today_and_overdue)
         return self.getTasksString(today_tasks, overdue_tasks)
 
 
@@ -46,9 +47,12 @@ class TodoManager:
             }
         ).json()
 
-    def getTaskObjects(self, task_data) -> List[TodoItem]:
-        return [TodoItem(item) for item in task_data]
+    def formatTaskObjects(self, task_data) -> List[TodoItem]:
+        tasks = [TodoItem(item) for item in task_data]
+        return tasks
 
+    def getTaskObjects(self) -> List[TodoItem]:
+        return self.task_objects
 
     def getFilterString(self) -> str:
         today_date = date.today().isoformat()
@@ -61,11 +65,11 @@ class TodoManager:
 
         s = PREFIX_STRING
         for task in today:
-            s += "[ ] %s\n" % task.getContent()
+            s += str(task)
         s += "\nHere are your overdue tasks:\n"
         for task in overdue:
-            s += "[ ] %s\n" % task.getContent()
-        
+            s += str(task)
+
         s += "[ ]\n[ ]\n[ ]\n\n\n\n\n"
 
         return s
