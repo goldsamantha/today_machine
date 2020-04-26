@@ -1,6 +1,7 @@
 import requests
 import json
-from datetime import date
+from datetime import date, datetime
+import time
 from typing import Dict, Tuple, Sequence, List
 
 from . import secrets
@@ -49,7 +50,10 @@ class TodoManager:
 
     def formatTaskObjects(self, task_data) -> List[TodoItem]:
         tasks = [TodoItem(item) for item in task_data]
-        tasks.sort(key=lambda item: item.getDueTime() if item.getDueTime() != None else item.getDueDate())
+
+        late_st = time.strptime("23:59", "%H:%M")
+        late = datetime.fromtimestamp(time.mktime(late_st))
+        tasks.sort(key=lambda item: item.getDueTime().time() if item.getDueTime() != None else late.time())
         return tasks
 
     def getTaskObjects(self) -> List[TodoItem]:

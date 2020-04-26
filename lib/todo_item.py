@@ -23,13 +23,13 @@ class TodoItem:
         return self.content
 
     def isToday(self) -> bool:
-        return self.getDueDate() == date.today()
+        return self.getDueDate().date() == date.today()
 
     def formatDueDate(self) -> datetime:
         # TODO: should probably make this a datetime object...
         return datetime.fromisoformat(self.due['date'])
 
-    def getDueDate(self) -> date:
+    def getDueDate(self) -> datetime:
         return self.due_date
 
     def getDueTimeString(self) -> str:
