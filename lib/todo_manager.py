@@ -49,6 +49,7 @@ class TodoManager:
 
     def formatTaskObjects(self, task_data) -> List[TodoItem]:
         tasks = [TodoItem(item) for item in task_data]
+        tasks.sort(key=lambda item: item.getDueTime() if item.getDueTime() != None else item.getDueDate())
         return tasks
 
     def getTaskObjects(self) -> List[TodoItem]:

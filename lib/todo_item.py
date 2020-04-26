@@ -17,7 +17,7 @@ class TodoItem:
         return repr((self.due_time, self.due_date))
 
     def __str__(self):
-        return "%s [ ] %s\n" % (self.getDueTimeString(), self.getContent())
+        return "%s[ ] %s\n" % (self.getDueTimeString(), self.getContent())
 
     def getContent(self) -> str:
         return self.content
@@ -25,9 +25,9 @@ class TodoItem:
     def isToday(self) -> bool:
         return self.getDueDate() == date.today()
 
-    def formatDueDate(self) -> date:
+    def formatDueDate(self) -> datetime:
         # TODO: should probably make this a datetime object...
-        return date.fromisoformat(self.due['date'])
+        return datetime.fromisoformat(self.due['date'])
 
     def getDueDate(self) -> date:
         return self.due_date
@@ -40,7 +40,7 @@ class TodoItem:
         
         eastern = pytz.timezone('US/Eastern')
         due_time = pytz.utc.localize(due_time)
-        return due_time.astimezone(eastern).strftime("%I:%M")
+        return due_time.astimezone(eastern).strftime("%I:%M") + " "
 
     def formatDueTime(self):
         # TODO should check to see if already set, if so return set
