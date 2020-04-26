@@ -3,6 +3,8 @@
 python3 -m venv env
 python3 -m pip install requests
 python3 -m pip install todoist-python 
+python3 -m pip install pytz
+
 ```
 
 # Add your own API token

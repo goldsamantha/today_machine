@@ -1,1 +1,4 @@
 todoist-python
+pytz
+requests
+
