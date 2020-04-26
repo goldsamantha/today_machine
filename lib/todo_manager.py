@@ -51,6 +51,7 @@ class TodoManager:
     def formatTaskObjects(self, task_data) -> List[TodoItem]:
         tasks = [TodoItem(item) for item in task_data]
 
+        # TODO - this is maybe stupid--should def write tests for this
         late_st = time.strptime("23:59", "%H:%M")
         late = datetime.fromtimestamp(time.mktime(late_st))
         tasks.sort(key=lambda item: item.getDueTime().time() if item.getDueTime() != None else late.time())
