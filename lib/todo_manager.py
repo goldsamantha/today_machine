@@ -52,7 +52,8 @@ class TodoManager:
         tasks = [TodoItem(item) for item in task_data]
 
         # TODO - this is maybe stupid--should def write tests for this
-        late_st = time.strptime("23:59", "%H:%M")
+        # last viable week in future for windows!
+        late_st = time.strptime("2038:23:59", "%Y:%H:%M")
         late = datetime.fromtimestamp(time.mktime(late_st))
         tasks.sort(key=lambda item: item.getDueTime().time() if item.getDueTime() != None else late.time())
         return tasks
